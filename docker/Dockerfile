@@ -34,7 +34,7 @@ RUN cd ~ && \
     mkdir -p /var/lib/grafana/plugins && \
     ln -s `pwd`/dist /var/lib/grafana/plugins/skydive-grafana-datasource
 
-RUN chown -R 28000 /etc/grafana/
+RUN chown -R 28000 /etc/grafana /var/lib/grafana /var/log/grafana
 
 
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
@@ -45,5 +45,7 @@ COPY ./src/run.sh /run.sh
 
 RUN chown 28000 /run.sh && \
     chmod +x /run.sh
+
+USER 28000
 
 CMD ["/run.sh"]
