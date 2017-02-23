@@ -4,14 +4,6 @@
    "items":[
         {
             "apiVersion": "v1",
-            "kind": "ImageStream",
-            "metadata": {
-                "name": "grafana-skydive"
-            }
-        },
-
-        {
-            "apiVersion": "v1",
             "kind": "BuildConfig",
             "metadata": {
                 "name": "grafana-skydive"
@@ -24,9 +16,9 @@
                     }
                 },
                 "source": {
-                    "contextDir": "docker/",
+                    "contextDir": "redis-cluster/",
                     "git": {
-                        "uri": "https://github.com/makentenza/grafana-skydive.git"
+                        "uri": "https://github.com/redhat-cop/containers-quickstarts.git"
                     },
                     "type": "Git"
                 },
@@ -34,7 +26,7 @@
                     "dockerStrategy": {
                         "from": {
                             "kind": "DockerImage",
-                            "name": "debian:jessie"
+                            "name": "centos:7"
                         }
                     },
                     "type": "Docker"
