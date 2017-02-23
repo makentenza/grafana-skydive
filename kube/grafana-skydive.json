@@ -9,7 +9,13 @@
                 "name": "grafana-skydive"
             }
         },
-
+        {
+            "apiVersion": "v1",
+            "kind": "ServiceAccount",
+            "metadata": {
+                "name": "grafana"
+            }
+        },
         {
             "apiVersion": "v1",
             "kind": "BuildConfig",
