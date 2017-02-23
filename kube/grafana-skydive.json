@@ -71,7 +71,7 @@
                     }
                 ],
                 "selector": {
-                    "sname": "grafana-skydive"
+                    "name": "grafana-skydive"
                 },
                 "sessionAffinity": "None",
                 "type": "ClusterIP"

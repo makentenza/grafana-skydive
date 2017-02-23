@@ -26,7 +26,7 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
-RUN cd ~ && \
+RUN cd /home/grafana && \
     git clone https://github.com/skydive-project/skydive-grafana-datasource.git && \
     cd skydive-grafana-datasource && \
     npm i && \
@@ -34,7 +34,7 @@ RUN cd ~ && \
     mkdir -p /var/lib/grafana/plugins && \
     ln -s `pwd`/dist /var/lib/grafana/plugins/skydive-grafana-datasource
 
-RUN chown -R 28000 /etc/grafana /var/lib/grafana /var/log/grafana
+RUN chown -R 28000 /etc/grafana /var/lib/grafana /var/log/grafana /home/grafana
 
 
 VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
