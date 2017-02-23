@@ -43,4 +43,7 @@ EXPOSE 3000
 
 COPY ../src/run.sh /run.sh
 
-ENTRYPOINT ["/run.sh"]
+RUN chown 28000 /run.sh && \
+    chmod +x /run.sh
+
+CMD ["/run.sh"]
