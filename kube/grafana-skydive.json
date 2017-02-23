@@ -56,6 +56,28 @@
             }
         },
       {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "name": "grafana"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "grafana-web",
+                        "port": 3000,
+                        "protocol": "TCP",
+                        "targetPort": 3000
+                    }
+                ],
+                "selector": {
+                    "sname": "grafana-skydive"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            }
+        },
+      {
           "apiVersion": "v1",
           "kind": "DeploymentConfig",
           "metadata": {
