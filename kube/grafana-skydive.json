@@ -17,6 +17,23 @@
             }
         },
         {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "grafana-skydive",
+            },
+            "spec": {
+                "to": {
+                    "kind": "Service",
+                    "name": "grafana",
+                    "weight": 100
+                },
+                "port": {
+                    "targetPort": "grafana-web"
+                }
+            }
+        },
+        {
             "apiVersion": "v1",
             "kind": "BuildConfig",
             "metadata": {

@@ -19,7 +19,7 @@ Use the following instructions to deploy the full stack, Skydive + Grafana with 
 
       # oc label nodes --all skydive=true
 
-As soon as the agents Pods are running, you will see all your Cluster topology in your Skydive Analyzer wen interface.
+As soon as the agent Pods are running, you will see all your Cluster topology in your Skydive Analyzer wen interface.
 
 ![Topology](img/skydive01.png)
 
