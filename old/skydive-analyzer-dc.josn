@@ -1,0 +1,169 @@
+{
+    "kind": "DeploymentConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "skydive-analyzer",
+        "namespace": "skydive",
+        "selfLink": "/oapi/v1/namespaces/skydive/deploymentconfigs/skydive-analyzer",
+        "uid": "99c0d7dc-f86a-11e6-aa2b-fa163e7baba0",
+        "resourceVersion": "6229186",
+        "generation": 20,
+        "creationTimestamp": "2017-02-21T19:19:01Z",
+        "labels": {
+            "app": "skydive"
+        },
+        "annotations": {
+            "openshift.io/generated-by": "OpenShiftNewApp"
+        }
+    },
+    "spec": {
+        "strategy": {
+            "type": "Rolling",
+            "rollingParams": {
+                "updatePeriodSeconds": 1,
+                "intervalSeconds": 1,
+                "timeoutSeconds": 600,
+                "maxUnavailable": "25%",
+                "maxSurge": "25%"
+            },
+            "resources": {}
+        },
+        "triggers": [
+            {
+                "type": "ConfigChange"
+            }
+        ],
+        "replicas": 1,
+        "test": false,
+        "selector": {
+            "app": "skydive",
+            "tier": "analyzer"
+        },
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "skydive",
+                    "tier": "analyzer"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftNewApp"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "skydive-analyzer",
+                        "image": "skydive/skydive",
+                        "args": [
+                            "analyzer",
+                            "--listen=0.0.0.0:8082"
+                        ],
+                        "ports": [
+                            {
+                                "containerPort": 8082,
+                                "protocol": "TCP"
+                            },
+                            {
+                                "containerPort": 8082,
+                                "protocol": "UDP"
+                            },
+                            {
+                                "containerPort": 2379,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "SKYDIVE_ANALYZER_STORAGE",
+                                "value": "elasticsearch"
+                            },
+                            {
+                                "name": "SKYDIVE_GRAPH_BACKEND",
+                                "value": "elasticsearch"
+                            }
+                        ],
+                        "resources": {},
+                        "livenessProbe": {
+                            "tcpSocket": {
+                                "port": 8082
+                            },
+                            "initialDelaySeconds": 30,
+                            "timeoutSeconds": 5,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "failureThreshold": 3
+                        },
+                        "readinessProbe": {
+                            "tcpSocket": {
+                                "port": 8082
+                            },
+                            "initialDelaySeconds": 30,
+                            "timeoutSeconds": 5,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "failureThreshold": 1
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always"
+                    },
+                    {
+                        "name": "skydive-elasticsearch",
+                        "image": "elasticsearch:2",
+                        "ports": [
+                            {
+                                "containerPort": 9200,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "livenessProbe": {
+                            "tcpSocket": {
+                                "port": 9200
+                            },
+                            "initialDelaySeconds": 30,
+                            "timeoutSeconds": 5,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "failureThreshold": 3
+                        },
+                        "readinessProbe": {
+                            "tcpSocket": {
+                                "port": 9200
+                            },
+                            "initialDelaySeconds": 30,
+                            "timeoutSeconds": 5,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "failureThreshold": 1
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "privileged": true
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "securityContext": {}
+            }
+        }
+    },
+    "status": {
+        "latestVersion": 3,
+        "observedGeneration": 20,
+        "replicas": 1,
+        "updatedReplicas": 1,
+        "availableReplicas": 1,
+        "details": {
+            "message": "config change",
+            "causes": [
+                {
+                    "type": "ConfigChange"
+                }
+            ]
+        }
+    }
+}
