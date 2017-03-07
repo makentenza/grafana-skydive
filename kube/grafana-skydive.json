@@ -20,7 +20,7 @@
             "kind": "Route",
             "apiVersion": "v1",
             "metadata": {
-                "name": "grafana-skydive",
+                "name": "grafana-skydive"
             },
             "spec": {
                 "to": {
