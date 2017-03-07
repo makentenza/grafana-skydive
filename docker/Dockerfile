@@ -42,7 +42,6 @@ VOLUME ["/var/lib/grafana", "/var/log/grafana", "/etc/grafana"]
 EXPOSE 3000
 
 COPY ./src/run.sh /run.sh
-COPY ./src/grafana.ini /etc/grafana/grafana.ini
 
 RUN chown 28000 /run.sh /etc/grafana/grafana.ini && \
     chmod +x /run.sh
