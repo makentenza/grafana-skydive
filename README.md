@@ -15,11 +15,14 @@ Use the following instructions to deploy the full stack, Skydive + Grafana with 
         --> Success
             Run 'oc status' to view your app.
 
-      In order to deploy all the agent across your Nodes, label them accordingly:
-      
+      In order to deploy all the skydive agents across your Nodes, label them accordingly:
+
       # oc label nodes --all skydive=true
 
+As soon as the agents Pods are running, you will see all your Cluster topology in your Skydive Analyzer wen interface.
 
-      # oc new-project skydive
+![Topology](img/skydive01.png)
+
+
       # oc create -f https://raw.githubusercontent.com/makentenza/grafana-skydive/master/kube/grafana-skydive.json
       # oc adm policy add-scc-to-user anyuid system:serviceaccount:skydive:grafana
