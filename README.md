@@ -1,5 +1,7 @@
 ## Skydive for OCP and Grafana with skydive DataSource plugin
 
+This repository is based in the Skydive Project (https://github.com/skydive-project/skydive), an open source real-time network topology and protocols analyzer.
+
 Use the following instructions to deploy the full stack, Skydive + Grafana with Skydive plugin. Note that the Skydive Agent is configured to get information from the SDN using ovs-multitenant plugin:
 
       # oc new-project skydive
@@ -42,4 +44,16 @@ We need first to configure the DataSource to get info from the Skydive Analyzer 
 
 ![DataSource](img/grafana02.png)
 
-G.V().Has('Name', Regex('_openshift-infra_')).Out().Has("Type", "veth")
+Now the DataSource is configured, we can create a Dashboard to include metrics from Skydive. In order to get this metrics (Flows) we need to start a capture in Skydive (this requirement will removed in future releases) using the Skydive Web Interface or the Client (http://skydive-project.github.io/skydive/api/flows/). In this case and to avoid the manual creation of a skydive container (which requires OS privileges) we are going to create a new capture using the We Interface. For this example, we are going to capture all the traffic for one particular namespace, 'openshift-infra'. This namespace is used in OCP for metrics collection, so if these are configured we will see some traffic there for sure. using the following Gremlin expression we can capture all this traffic. More information about Gremlin Query Language can fe found in the following link: http://skydive-project.github.io/skydive/api/gremlin/
+
+        G.V().Has('Name', Regex('_openshift-infra_')).Out().Has("Type", "veth")
+
+Go to Captures tab in Skydive Web Interface and create a new one specifying a descrptive name and using Gremlin Expression option. Once crated you will be able to see some red points in your topology view corresponding to the interfaces where the traffic is being captured.
+
+![Capture](img/skydive02.png)
+
+Once the capture is started we can show the results in Grafana. Add a new Graph using the new configured DataSource and use the same Gremlin Qyery we have used for the capture but now adding the '.Flows()' key as this is the data what Grafana is expecting for.
+
+      G.V().Has('Name', Regex('_openshift-infra_')).Out().Has("Type", "veth").Flows()
+
+![DataSource](img/grafana03.png)
